@@ -1,43 +1,50 @@
 
-#include <cstdlib>
+
 #include <iostream>  
-#define COLONNE 20
-#define RIGHE 1000000
+#define COLONNE 10
+#define RIGHE 20000
 
 
 int matrice [RIGHE][COLONNE];
 
 
-void riempieLaRiga(int riga)
+void riempieLaMatrice()
 {
-	int c;
-	for ( c=0; c < COLONNE; c++)
+	int r,c;
+	for ( r=0; r < RIGHE; r++)
 	{
-		matrice[riga][c]=  (rand() % 100) + 1 ;// genera un numero ca-
-												 // suale tra 1 e 100
+		
+		for ( c=0 ; c< COLONNE ; c++ )
+		{
+			matrice[r][c]=  (rand() % 1000) + 1 ;// genera un numero ca-
+		}										 // suale tra 1 e 100
 												 // Visto con google !!
 	}
 }
 
-
-void stampaLaRiga(int riga)
+void stampaLaMatrice()
 {
-	int c;
-	for ( c=0; c < COLONNE; c++)
+	int r,c;
+	for ( r=0; r < RIGHE; r++)
 	{
-		std::cout.width(4);
-		std::cout<<matrice[riga][c];
-	};
+		for ( c=0 ; c < COLONNE ; c++)
+		{ 
+			std::cout.width(5);
+			std::cout<<matrice[r][c];
+		};
+		std::cout<<std::endl;
+	}
 	std::cout<<std::endl;
 }
 
-void ordinaLaRiga(int riga)
+
+void ordinaLaColonna(int colonna)
 
 {	// e' un bubble sort
 		
 	int ultimoScambiato ;
 	
-	int n = COLONNE -1 ;
+	int n = RIGHE -1 ;
 	
 	do 
 	{
@@ -45,17 +52,19 @@ void ordinaLaRiga(int riga)
 		
 		for ( int i=0; i<= n-1 ; i++)
 		{	
-			if (matrice[riga][i] > matrice[riga][i + 1]) 
+			if (matrice[i][colonna] > matrice[i + 1][colonna]) 
 			{	
-				int swap= matrice[riga][i]; matrice[riga][i]= matrice[riga][i+1];matrice[riga][i+1]=swap ;
+				int swap= matrice[i][colonna]; 
+				matrice[i][colonna]= matrice[i + 1][colonna];
+				matrice[i + 1][colonna]=swap ;
+				
 				ultimoScambiato = i ;
 			}
 		}
 		
 		n=ultimoScambiato;
 		
-	}
-	while (ultimoScambiato > 0 );
+	} while (ultimoScambiato > 0 );
 	
 	return;
 
@@ -68,43 +77,20 @@ void ordinaLaRiga(int riga)
 
 int main()
 {
-
-	int r ;
-
-	// riempie le righe di numeri interi casuali casuali;
-	{
-		
-		for(r = 0; r < RIGHE; r++)
-		{
-			riempieLaRiga(r);
-		}
-	}
+	riempieLaMatrice();
 	
-	//stampa le righe 
-	{
-		//for(r = 0; r < RIGHE; r++)
-		//{
-			//stampaLaRiga(r);
-		//}
-	}
+	stampaLaMatrice();
 	
-	//ordina le righe  
+	//ordina le colonne  
 	{	
 		
-		for(r = 0; r < RIGHE; r++)
+		for(int c = 0; c < COLONNE; c++)
 		{
-			ordinaLaRiga(r);
+			ordinaLaColonna(c);
 		}
 	}
 
-	//stampa le righe 
-	{	
-		//std::cout<<std::endl;
-		//for(r = 0; r < RIGHE; r++)
-		//{
-			//stampaLaRiga(r);
-		//}
-	}
+	stampaLaMatrice();
 
 return 0;
 }
